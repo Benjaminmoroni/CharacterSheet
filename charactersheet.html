@@ -1,0 +1,94 @@
+<html>
+
+  <% for(var character of characters) { %>
+
+  <form method="post" action="createCharacter" enctype="application/x-www-form-urlencoded"><fieldset>
+    <div><label for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=character.CharacterName%>" /></div>
+    <div><label for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=character.Race%>" /></div>
+    <div><label for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=character.Class%>" /></div><br>
+    <div><label for="Strength">Strength:</label><input type="number" id="strength" name="Strength" value= "<%=character.Strength%>" min="3" max="30" readonly="readonly"/>
+      <input id="strengthEdit" type="button" value="edit" /></div>
+    <div><label for="Dexterity">Dexterity:</label><input type="number" id="dexterity" name="Dexterity" value= "<%=character.Dexterity%>" min="3" max="30" readonly="readonly"/>
+    <input id="dexterityEdit" type="button" value="edit" /></div>
+    <div><label for="Constitution">Constitution:</label><input type="number" id="constitution" name="Constitution" value= "<%=character.Constitution%>" min="3" max="30" readonly="readonly"/>
+    <input id="constitutionEdit" type="button" value="edit" /></div>
+    <div><label for="Intelligence">Intelligence:</label><input type="number" id="intelligence" name="Intelligence" value= "<%=character.Intelligence%>" min="3" max="30" readonly="readonly"/>
+    <input id="intelligenceEdit" type="button" value="edit" /></div>
+    <div><label for="Wisdom">Wisdom:</label><input type="number" id="wisdom" name="Wisdom" value= "<%=character.Wisdom%>" min="3" max="30" readonly="readonly"/>
+    <input id="wisdomEdit" type="button" value="edit" /></div>
+    <div><label for="Charisma">Charisma:</label><input type="number" id="charisma" name="Charisma" value= "<%=character.Charisma%>" min="3" max="30" readonly="readonly"/>
+    <input id="charismaEdit" type="button" value="edit" /></div></fieldset>
+  </form>
+
+<% } %>
+
+  <script>
+  document.getElementById('strengthEdit').onclick = function() {
+    if (document.getElementById('strength').readOnly === true)
+      {
+      document.getElementById('strength').removeAttribute('readonly');
+      document.getElementById('strengthEdit').setAttribute('value', 'save');
+    } else {
+     document.getElementById('strengthEdit').setAttribute('type', 'submit');
+     document.getElementById('strengthEdit').setAttribute('value', 'edit');
+     document.getElementById('strength').setAttribute('readonly', 'readonly');
+    }
+  };
+  document.getElementById('dexterityEdit').onclick = function() {
+    if (document.getElementById('dexterity').readOnly === true)
+      {
+      document.getElementById('strength').removeAttribute('readonly');
+      document.getElementById('dexterityEdit').setAttribute('value', 'save');
+    } else {
+     document.getElementById('dexterityEdit').setAttribute('type', 'submit');
+     document.getElementById('dexterityEdit').setAttribute('value', 'edit');
+     document.getElementById('dexterity').setAttribute('readonly', 'readonly');
+    }
+  };
+  document.getElementById('constitutionEdit').onclick = function() {
+    if (document.getElementById('strength').readOnly === true)
+      {
+      document.getElementById('constitution').removeAttribute('readonly');
+      document.getElementById('constitutionEdit').setAttribute('value', 'save');
+    } else {
+     document.getElementById('constitutionEdit').setAttribute('type', 'submit');
+     document.getElementById('constitutionEdit').setAttribute('value', 'edit');
+     document.getElementById('constitution').setAttribute('readonly', 'readonly');
+    }
+  };
+  document.getElementById('intelligenceEdit').onclick = function() {
+    if (document.getElementById('intelligence').readOnly === true)
+      {
+      document.getElementById('intelligence').removeAttribute('readonly');
+      document.getElementById('intelligenceEdit').setAttribute('value', 'save');
+    } else {
+     document.getElementById('intelligenceEdit').setAttribute('type', 'submit');
+     document.getElementById('intelligenceEdit').setAttribute('value', 'edit');
+     document.getElementById('intelligence').setAttribute('readonly', 'readonly');
+    }
+  };
+  document.getElementById('wisdomEdit').onclick = function() {
+    if (document.getElementById('wisdom').readOnly === true)
+      {
+      document.getElementById('wisdom').removeAttribute('readonly');
+      document.getElementById('wisdomEdit').setAttribute('value', 'save');
+    } else {
+     document.getElementById('wisdomEdit').setAttribute('type', 'submit');
+     document.getElementById('wisdomEdit').setAttribute('value', 'edit');
+     document.getElementById('wisdom').setAttribute('readonly', 'readonly');
+    }
+  };
+  document.getElementById('charismaEdit').onclick = function() {
+    if (document.getElementById('charisma').readOnly === true)
+      {
+      document.getElementById('charisma').removeAttribute('readonly');
+      document.getElementById('charismaEdit').setAttribute('value', 'save');
+    } else {
+     document.getElementById('charismaEdit').setAttribute('type', 'submit');
+     document.getElementById('charismaEdit').setAttribute('value', 'edit');
+     document.getElementById('charisma').setAttribute('readonly', 'readonly');
+    }
+  };
+  </script>
+
+</html>
