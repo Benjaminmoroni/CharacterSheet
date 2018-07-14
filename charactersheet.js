@@ -23,7 +23,7 @@ const server = http.createServer(function (req, res) {
     } else {
       var pathname = url.parse(req.url, true).pathname;
       var filename = "./" + pathname;
-      fs.readFileSync(filename, function(err, data){
+      fs.readFile(filename, function(err, data){
         if (err) {
           res.writeHead(404, {'Content-Type': 'text/html'});
           return res.end("404 Not Found");
