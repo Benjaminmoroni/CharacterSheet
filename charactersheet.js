@@ -9,11 +9,11 @@ const server = http.createServer(function (req, res) {
   if (req.method === "GET") {
     if (req.url === "/character") {
       let rawdata = fs.readFileSync("./characters.json");
-      let character = JSON.parse(rawdata);
-      ejs.renderFile("charactersheet.html", character, function(err, str){
+      let characters = JSON.parse(rawdata);
+      ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
         if (err){
           res.writeHead(404, {'Content-Type': 'text/html'});
-          return res.end("404 Not Found");
+          return res.end("No Characters - 404 Not Found");
         }
         if (str){
           res.writeHead(200, {"content-type": "text/html"});
@@ -27,7 +27,7 @@ const server = http.createServer(function (req, res) {
       fs.readFile(filename, function(err, data){
         if (err) {
           res.writeHead(404, {'Content-Type': 'text/html'});
-          return res.end("404 Not Found");
+          return res.end("No File - 404 Not Found");
         }
         if (data) {
           res.writeHead(200, {"content-type": "text/html"});
@@ -37,7 +37,7 @@ const server = http.createServer(function (req, res) {
       })
     }
   }
-  else if (req.method === "POST") {
+  if (req.method === "POST") {
     if (req.url === '/createCharacter') {
       var newId = shortid.generate();
       var body = "";
@@ -48,15 +48,13 @@ const server = http.createServer(function (req, res) {
       req.on("end", function(){
         var formData = qs.parse(body);
         formData.id = newId
-        var name = qs.parse(body).CharacterName
         fs.readFile('./characters.json', 'utf-8', function(err, data) {
             if (err) throw err
 
-            var arrayOfObjects = JSON.parse(data)
-            arrayOfObjects.characters.push(formData)
-            arrayOfObjects.names.push(name)
+            var characters = JSON.parse(data)
+            characters[newId] = formData
 
-            fs.writeFileSync('./characters.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
+            fs.writeFileSync('./characters.json', JSON.stringify(characters), 'utf-8', function(err) {
                 if (err) throw err
                       console.log('Done!')
             })
@@ -66,7 +64,36 @@ const server = http.createServer(function (req, res) {
       });
     } else {
       res.writeHead(404, {'Content-Type': 'text/html'});
-      return res.end("404 Not Found");
+      return res.end("Not Created - 404 Not Found");
+    }
+  }
+  else if (req.method === "put") {
+    if (req.url === '/update') {
+      var body = "";
+      req.on("data", function (chunk) {
+        body += chunk;
+      });
+
+      req.on("end", function(){
+        var formData = qs.parse(body);
+        var id = formData.characterId
+        fs.readFile('./characters.json', 'utf-8', function(err, data) {
+            if (err) throw err
+
+            var characters = JSON.parse(data)
+            character[id] = formData
+
+            fs.writeFileSync('./characters.json', JSON.stringify(characters), 'utf-8', function(err) {
+                if (err) throw err
+                      console.log('Done!')
+            })
+        });
+        res.writeHead(302, {'Location': '/character'});
+        res.end();
+      });
+    } else {
+      res.writeHead(404, {'Content-Type': 'text/html'});
+      return res.end("Not Saved - 404 Not Found");
     }
   }
 })
