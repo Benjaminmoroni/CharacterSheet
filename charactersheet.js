@@ -4,6 +4,7 @@ const fs = require("fs");
 const qs = require("querystring");
 const ejs = require("ejs")
 var shortid = require("shortid")
+const PORT = process.env.PORT || 8080
 const server = http.createServer(function (req, res) {
   if (req.method === "GET") {
     if (req.url === "/character") {
@@ -69,4 +70,4 @@ const server = http.createServer(function (req, res) {
     }
   }
 })
-server.listen(8080);
+server.listen(PORT);
