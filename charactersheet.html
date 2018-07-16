@@ -2,24 +2,30 @@
 
   <% for(var id of Object.keys(characters)) { %>
 
-  <form method="put" action="/update" enctype="application/x-www-form-urlencoded"><fieldset>
-    <div><label for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=characters[id].CharacterName%>" /></div>
-    <div><label for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
-    <div><label for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
-    <div><label for="Strength">Strength:</label><input type="number" id="strength" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
+<fieldset>
+  <form method="post" action="/update" enctype="application/x-www-form-urlencoded">
+      <div><label for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=characters[id].CharacterName%>" /></div>
+      <div><label for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
+      <div><label for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
+      <div><label for="Strength">Strength:</label><input type="number" id="strength" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
       <input id="strengthEdit" type="button" value="edit" /></div>
-    <div><label for="Dexterity">Dexterity:</label><input type="number" id="dexterity" name="Dexterity" value= "<%=characters[id].Dexterity%>" min="3" max="30" readonly="readonly"/>
-    <input id="dexterityEdit" type="button" value="edit" /></div>
-    <div><label for="Constitution">Constitution:</label><input type="number" id="constitution" name="Constitution" value= "<%=characters[id].Constitution%>" min="3" max="30" readonly="readonly"/>
-    <input id="constitutionEdit" type="button" value="edit" /></div>
-    <div><label for="Intelligence">Intelligence:</label><input type="number" id="intelligence" name="Intelligence" value= "<%=characters[id].Intelligence%>" min="3" max="30" readonly="readonly"/>
-    <input id="intelligenceEdit" type="button" value="edit" /></div>
-    <div><label for="Wisdom">Wisdom:</label><input type="number" id="wisdom" name="Wisdom" value= "<%=characters[id].Wisdom%>" min="3" max="30" readonly="readonly"/>
-    <input id="wisdomEdit" type="button" value="edit" /></div>
-    <div><label for="Charisma">Charisma:</label><input type="number" id="charisma" name="Charisma" value= "<%=characters[id].Charisma%>" min="3" max="30" readonly="readonly"/>
-    <input id="charismaEdit" type="button" value="edit" /></div>
-    <input id="characterId" type="hidden" value="<%=id%>" /></fieldset>
+      <div><label for="Dexterity">Dexterity:</label><input type="number" id="dexterity" name="Dexterity" value= "<%=characters[id].Dexterity%>" min="3" max="30" readonly="readonly"/>
+      <input id="dexterityEdit" type="button" value="edit" /></div>
+      <div><label for="Constitution">Constitution:</label><input type="number" id="constitution" name="Constitution" value= "<%=characters[id].Constitution%>" min="3" max="30" readonly="readonly"/>
+      <input id="constitutionEdit" type="button" value="edit" /></div>
+      <div><label for="Intelligence">Intelligence:</label><input type="number" id="intelligence" name="Intelligence" value= "<%=characters[id].Intelligence%>" min="3" max="30" readonly="readonly"/>
+      <input id="intelligenceEdit" type="button" value="edit" /></div>
+      <div><label for="Wisdom">Wisdom:</label><input type="number" id="wisdom" name="Wisdom" value= "<%=characters[id].Wisdom%>" min="3" max="30" readonly="readonly"/>
+      <input id="wisdomEdit" type="button" value="edit" /></div>
+      <div><label for="Charisma">Charisma:</label><input type="number" id="charisma" name="Charisma" value= "<%=characters[id].Charisma%>" min="3" max="30" readonly="readonly"/>
+      <input id="charismaEdit" type="button" value="edit" /></div>
+      <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
   </form>
+  <form method="post" action="/delete" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
+    <input id="deleteCharacter" type="submit" value="Delete Character Forever; Do Not Click Accidentally" />
+  </form>
+</fieldset>
 
 <% } %>
 

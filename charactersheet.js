@@ -62,12 +62,7 @@ const server = http.createServer(function (req, res) {
         res.writeHead(302, {'Location': '/character'});
         res.end();
       });
-    } else {
-      res.writeHead(404, {'Content-Type': 'text/html'});
-      return res.end("Not Created - 404 Not Found");
     }
-  }
-  else if (req.method === "put") {
     if (req.url === '/update') {
       var body = "";
       req.on("data", function (chunk) {
@@ -81,7 +76,31 @@ const server = http.createServer(function (req, res) {
             if (err) throw err
 
             var characters = JSON.parse(data)
-            character[id] = formData
+            characters[id] = formData
+
+            fs.writeFileSync('./characters.json', JSON.stringify(characters), 'utf-8', function(err) {
+                if (err) throw err
+                      console.log('Done!')
+            })
+        });
+        res.writeHead(302, {'Location': '/character'});
+        res.end();
+      });
+    }
+    if (req.url === '/delete') {
+      var body = "";
+      req.on("data", function (chunk) {
+        body += chunk;
+      });
+
+      req.on("end", function(){
+        var formData = qs.parse(body);
+        var id = formData.characterId
+        fs.readFile('./characters.json', 'utf-8', function(err, data) {
+            if (err) throw err
+
+            var characters = JSON.parse(data)
+            delete characters[id]
 
             fs.writeFileSync('./characters.json', JSON.stringify(characters), 'utf-8', function(err) {
                 if (err) throw err
@@ -93,7 +112,7 @@ const server = http.createServer(function (req, res) {
       });
     } else {
       res.writeHead(404, {'Content-Type': 'text/html'});
-      return res.end("Not Saved - 404 Not Found");
+      return res.end("Not Created - 404 Not Found");
     }
   }
 })
