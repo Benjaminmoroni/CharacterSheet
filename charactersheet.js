@@ -37,7 +37,7 @@ const server = http.createServer(function (req, res) {
       })
     }
   }
-  if (req.method === "POST") {
+  else if (req.method === "POST") {
     if (req.url === '/createCharacter') {
       var newId = shortid.generate();
       var body = "";
@@ -63,7 +63,7 @@ const server = http.createServer(function (req, res) {
         res.end();
       });
     }
-    if (req.url === '/update') {
+    else if (req.url === '/update') {
       var body = "";
       req.on("data", function (chunk) {
         body += chunk;
@@ -87,7 +87,7 @@ const server = http.createServer(function (req, res) {
         res.end();
       });
     }
-    if (req.url === '/delete') {
+    else if (req.url === '/delete') {
       var body = "";
       req.on("data", function (chunk) {
         body += chunk;
