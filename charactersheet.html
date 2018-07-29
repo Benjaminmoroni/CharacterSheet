@@ -1,169 +1,124 @@
 <html>
 <head>
-  <style>
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-</style>
 </head>
 
 <body>
   <h3>Characters</h3>
   <% for(var id of Object.keys(characters)) { %>
 
-    <input id="myBtn" type="button" value="<%=characters[id].CharacterName%>"/><br><br>
+  <button id="myBtn_<%=id%>" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal_<%=id%>"><%=characters[id].CharacterName%></button><br><br>
 
-    <script>
-      var modal = document.getElementById('myModal');
-      var btn = document.getElementById("myBtn");
-      var span = document.getElementsByClassName("close")[0];
-
-      btn.onclick = function() {
-        modal.style.display = "block";
-      }
-
-      span.onclick = function() {
-        modal.style.display = "none";
-      }
-
-      window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-      }
-    </script>
-
-    <div id="myModal" class="modal">
+  <div id="myModal_<%=id%>" class="modal fade" role="dialog">
+    <div class="modal-dialog">
       <div class="modal-content">
-      <span class="close">&times;</span>
+        <div class="modal-body">
+          <fieldset>
+            <form  class="form-horizontal" method="post" action="/update" enctype="application/x-www-form-urlencoded">
+              <div class="form-group"><label class="control-label col-sm-3" for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=characters[id].CharacterName%>" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
+              <div class="form-group"><label class="control-label col-sm-3" for="Strength">Strength:</label><input type="number" id="strength" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn" id="strengthEdit" type="button" value="edit" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Dexterity">Dexterity:</label><input type="number" id="dexterity" name="Dexterity" value= "<%=characters[id].Dexterity%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn" id="dexterityEdit" type="button" value="edit" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Constitution">Constitution:</label><input type="number" id="constitution" name="Constitution" value= "<%=characters[id].Constitution%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn" id="constitutionEdit" type="button" value="edit" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Intelligence">Intelligence:</label><input type="number" id="intelligence" name="Intelligence" value= "<%=characters[id].Intelligence%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn" id="intelligenceEdit" type="button" value="edit" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Wisdom">Wisdom:</label><input type="number" id="wisdom" name="Wisdom" value= "<%=characters[id].Wisdom%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn" id="wisdomEdit" type="button" value="edit" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Charisma">Charisma:</label><input type="number" id="charisma" name="Charisma" value= "<%=characters[id].Charisma%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn" id="charismaEdit" type="button" value="edit" /></div>
+              <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
+            </form>
+            <form method="post" action="/delete" enctype="application/x-www-form-urlencoded">
+              <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
+              <input class="btn btn-danger" id="deleteCharacter" type="submit" value="Delete Character Forever; Do Not Click Accidentally" />
+            </form>
+          </fieldset>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
 
-      <fieldset>
-        <form method="post" action="/update" enctype="application/x-www-form-urlencoded">
-          <div><label for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=characters[id].CharacterName%>" /></div>
-          <div><label for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
-          <div><label for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
-          <div><label for="Strength">Strength:</label><input type="number" id="strength" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
-          <input id="strengthEdit" type="button" value="edit" /></div>
-          <div><label for="Dexterity">Dexterity:</label><input type="number" id="dexterity" name="Dexterity" value= "<%=characters[id].Dexterity%>" min="3" max="30" readonly="readonly"/>
-          <input id="dexterityEdit" type="button" value="edit" /></div>
-          <div><label for="Constitution">Constitution:</label><input type="number" id="constitution" name="Constitution" value= "<%=characters[id].Constitution%>" min="3" max="30" readonly="readonly"/>
-          <input id="constitutionEdit" type="button" value="edit" /></div>
-          <div><label for="Intelligence">Intelligence:</label><input type="number" id="intelligence" name="Intelligence" value= "<%=characters[id].Intelligence%>" min="3" max="30" readonly="readonly"/>
-          <input id="intelligenceEdit" type="button" value="edit" /></div>
-          <div><label for="Wisdom">Wisdom:</label><input type="number" id="wisdom" name="Wisdom" value= "<%=characters[id].Wisdom%>" min="3" max="30" readonly="readonly"/>
-          <input id="wisdomEdit" type="button" value="edit" /></div>
-          <div><label for="Charisma">Charisma:</label><input type="number" id="charisma" name="Charisma" value= "<%=characters[id].Charisma%>" min="3" max="30" readonly="readonly"/>
-          <input id="charismaEdit" type="button" value="edit" /></div>
-          <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
-        </form>
-        <form method="post" action="/delete" enctype="application/x-www-form-urlencoded">
-          <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
-          <input id="deleteCharacter" type="submit" value="Delete Character Forever; Do Not Click Accidentally" />
-        </form>
-      </fieldset>
-
-    <script>
-    document.getElementById('strengthEdit').onclick = function() {
-      if (document.getElementById('strength').readOnly === true)
-        {
-        document.getElementById('strength').removeAttribute('readonly');
-        document.getElementById('strengthEdit').setAttribute('value', 'save');
-      } else {
-       document.getElementById('strengthEdit').setAttribute('type', 'submit');
-       document.getElementById('strengthEdit').setAttribute('value', 'edit');
-       document.getElementById('strength').setAttribute('readonly', 'readonly');
-      }
-    };
-    document.getElementById('dexterityEdit').onclick = function() {
-      if (document.getElementById('dexterity').readOnly === true)
-        {
-        document.getElementById('dexterity').removeAttribute('readonly');
-        document.getElementById('dexterityEdit').setAttribute('value', 'save');
-      } else {
-       document.getElementById('dexterityEdit').setAttribute('type', 'submit');
-       document.getElementById('dexterityEdit').setAttribute('value', 'edit');
-       document.getElementById('dexterity').setAttribute('readonly', 'readonly');
-      }
-    };
-    document.getElementById('constitutionEdit').onclick = function() {
-      if (document.getElementById('constitution').readOnly === true)
-        {
-        document.getElementById('constitution').removeAttribute('readonly');
-        document.getElementById('constitutionEdit').setAttribute('value', 'save');
-      } else {
-       document.getElementById('constitutionEdit').setAttribute('type', 'submit');
-       document.getElementById('constitutionEdit').setAttribute('value', 'edit');
-       document.getElementById('constitution').setAttribute('readonly', 'readonly');
-      }
-    };
-    document.getElementById('intelligenceEdit').onclick = function() {
-      if (document.getElementById('intelligence').readOnly === true)
-        {
-        document.getElementById('intelligence').removeAttribute('readonly');
-        document.getElementById('intelligenceEdit').setAttribute('value', 'save');
-      } else {
-       document.getElementById('intelligenceEdit').setAttribute('type', 'submit');
-       document.getElementById('intelligenceEdit').setAttribute('value', 'edit');
-       document.getElementById('intelligence').setAttribute('readonly', 'readonly');
-      }
-    };
-    document.getElementById('wisdomEdit').onclick = function() {
-      if (document.getElementById('wisdom').readOnly === true)
-        {
-        document.getElementById('wisdom').removeAttribute('readonly');
-        document.getElementById('wisdomEdit').setAttribute('value', 'save');
-      } else {
-       document.getElementById('wisdomEdit').setAttribute('type', 'submit');
-       document.getElementById('wisdomEdit').setAttribute('value', 'edit');
-       document.getElementById('wisdom').setAttribute('readonly', 'readonly');
-      }
-    };
-    document.getElementById('charismaEdit').onclick = function() {
-      if (document.getElementById('charisma').readOnly === true)
-        {
-        document.getElementById('charisma').removeAttribute('readonly');
-        document.getElementById('charismaEdit').setAttribute('value', 'save');
-      } else {
-       document.getElementById('charismaEdit').setAttribute('type', 'submit');
-       document.getElementById('charismaEdit').setAttribute('value', 'edit');
-       document.getElementById('charisma').setAttribute('readonly', 'readonly');
-      }
-    };
-    </script>
+          <script>
+          document.getElementById('strengthEdit').onclick = function() {
+            if (document.getElementById('strength').readOnly === true)
+              {
+              document.getElementById('strength').removeAttribute('readonly');
+              document.getElementById('strengthEdit').setAttribute('value', 'save');
+            } else {
+             document.getElementById('strengthEdit').setAttribute('type', 'submit');
+             document.getElementById('strengthEdit').setAttribute('value', 'edit');
+             document.getElementById('strength').setAttribute('readonly', 'readonly');
+            }
+          };
+          document.getElementById('dexterityEdit').onclick = function() {
+            if (document.getElementById('dexterity').readOnly === true)
+              {
+              document.getElementById('dexterity').removeAttribute('readonly');
+              document.getElementById('dexterityEdit').setAttribute('value', 'save');
+            } else {
+             document.getElementById('dexterityEdit').setAttribute('type', 'submit');
+             document.getElementById('dexterityEdit').setAttribute('value', 'edit');
+             document.getElementById('dexterity').setAttribute('readonly', 'readonly');
+            }
+          };
+          document.getElementById('constitutionEdit').onclick = function() {
+            if (document.getElementById('constitution').readOnly === true)
+              {
+              document.getElementById('constitution').removeAttribute('readonly');
+              document.getElementById('constitutionEdit').setAttribute('value', 'save');
+            } else {
+             document.getElementById('constitutionEdit').setAttribute('type', 'submit');
+             document.getElementById('constitutionEdit').setAttribute('value', 'edit');
+             document.getElementById('constitution').setAttribute('readonly', 'readonly');
+            }
+          };
+          document.getElementById('intelligenceEdit').onclick = function() {
+            if (document.getElementById('intelligence').readOnly === true)
+              {
+              document.getElementById('intelligence').removeAttribute('readonly');
+              document.getElementById('intelligenceEdit').setAttribute('value', 'save');
+            } else {
+             document.getElementById('intelligenceEdit').setAttribute('type', 'submit');
+             document.getElementById('intelligenceEdit').setAttribute('value', 'edit');
+             document.getElementById('intelligence').setAttribute('readonly', 'readonly');
+            }
+          };
+          document.getElementById('wisdomEdit').onclick = function() {
+            if (document.getElementById('wisdom').readOnly === true)
+              {
+              document.getElementById('wisdom').removeAttribute('readonly');
+              document.getElementById('wisdomEdit').setAttribute('value', 'save');
+            } else {
+             document.getElementById('wisdomEdit').setAttribute('type', 'submit');
+             document.getElementById('wisdomEdit').setAttribute('value', 'edit');
+             document.getElementById('wisdom').setAttribute('readonly', 'readonly');
+            }
+          };
+          document.getElementById('charismaEdit').onclick = function() {
+            if (document.getElementById('charisma').readOnly === true)
+              {
+              document.getElementById('charisma').removeAttribute('readonly');
+              document.getElementById('charismaEdit').setAttribute('value', 'save');
+            } else {
+             document.getElementById('charismaEdit').setAttribute('type', 'submit');
+             document.getElementById('charismaEdit').setAttribute('value', 'edit');
+             document.getElementById('charisma').setAttribute('readonly', 'readonly');
+            }
+          };
+          </script>
+        </div>
+      </div>
+    </div>
   </div>
 
-</div>
 <% } %>
 
 </body>
