@@ -1,8 +1,18 @@
-<html><body>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
   <h1>Character Sheet</h1>
-  <form method="post" action="/createCharacter" enctype="application/x-www-form-urlencoded"><fieldset>
-   <label for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName"/><br>
-   <label for="Race">Race:</label><select id="Race" name="Race" />
+  <form class="form-horizontal" method="post" action="/character/create" enctype="application/x-www-form-urlencoded"><fieldset>
+   <div class="form-group"><label class="control-label col-sm-1" for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName"/></div><br>
+   <div class="form-group"><label class="control-label col-sm-1" for="Race">Race:</label><select id="Race" name="Race" />
      <option value="Aarakocra">Aarakocra</option>
      <option value="Aasimar">Aasimar</option>
      <option value="Bugbear">Bugbear</option>
@@ -32,8 +42,8 @@
      <option value="Tortle">Tortle</option>
      <option value="Triton">Triton</option>
      <option value="Yuan-tiPureblood">Yuan-ti Pureblood</option>
-   </select>
-   <label for="Class">Class:</label><select id="Class" name="Class" />
+   </select></div>
+   <div class="form-group"><label class="control-label col-sm-1" for="Class">Class:</label><select id="Class" name="Class" /></div>
      <option value="Barbarian">Barbarian</option>
      <option value="Bard">Bard</option>
      <option value="Cleric">Cleric</option>
@@ -48,13 +58,13 @@
      <option value="Wizard">Wizard</option>
    </select>
    <br><br>
-   <label for="Strength">Strength:</label><input type="number" id="Strength" name="Strength" min="3" max="18" step="1"/><br>
-   <label for="Dexterity">Dexterity:</label><input type="number" id="Dexterity" name="Dexterity" min="3" max="18"><br>
-   <label for="Constitution">Constitution:</label><input type="number" id="Constitution" name="Constitution" min="3" max="18"><br>
-   <label for="Intelligence">Intelligence:</label><input type="number" id="Intelligence" name="Intelligence" min="3" max="18"><br>
-   <label for="Wisdom">Wisdom:</label><input type="number" id="Wisdom" name="Wisdom" min="3" max="18"><br>
-   <label for="Charisma">Charisma:</label><input type="number" id="Charisma" name="Charisma" min="3" max="18"><br>
-   <input id="AssignAttributes" type="submit" value="Assign Attributes" /></div></fieldset>
+   <div class="form-group"><label class="control-label col-sm-1" for="Strength">Strength:</label><input type="number" id="Strength" name="Strength" min="3" max="18" step="1"/></div><br>
+   <div class="form-group"><label class="control-label col-sm-1" for="Dexterity">Dexterity:</label><input type="number" id="Dexterity" name="Dexterity" min="3" max="18"></div><br>
+   <div class="form-group"><label class="control-label col-sm-1" for="Constitution">Constitution:</label><input type="number" id="Constitution" name="Constitution" min="3" max="18"></div><br>
+   <div class="form-group"><label class="control-label col-sm-1" for="Intelligence">Intelligence:</label><input type="number" id="Intelligence" name="Intelligence" min="3" max="18"></div><br>
+   <div class="form-group"><label class="control-label col-sm-1" for="Wisdom">Wisdom:</label><input type="number" id="Wisdom" name="Wisdom" min="3" max="18"></div><br>
+   <div class="form-group"><label class="control-label col-sm-1" for="Charisma">Charisma:</label><input type="number" id="Charisma" name="Charisma" min="3" max="18"></div><br>
+   <div class="control-label col-sm-1"></div><div class="form-group"><input class="btn btn-default col-sm-2" id="AssignAttributes" type="submit" value="Assign Attributes" /></div></fieldset>
   </form>
 
 
