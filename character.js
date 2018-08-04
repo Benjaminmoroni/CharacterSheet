@@ -6,10 +6,12 @@ const qs = require("querystring");
 const ejs = require("ejs");
 
 exports.myModule = function(req, res) {
+  var pieces = req.url.split('/')
+  var restOfURL = pieces.slice(0,3).join('/')
   let rawdata = fs.readFileSync("./characters.json");
   let characters = JSON.parse(rawdata);
   if (req.method === "GET") {
-    if (req.url === "/character/sheets") {
+    if (restOfURL === "/character/sheets") {
       ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
         if (err){
           res.writeHead(404, {'Content-Type': 'text/html'});
@@ -22,7 +24,7 @@ exports.myModule = function(req, res) {
         }
       });
     }
-    else if (req.url === "/character/creation") {
+    else if (restOfURL === "/character/creation") {
       fs.readFile("charactercreation.html", function(err, data){
         if (err) {
           res.writeHead(404, {'Content-Type': 'text/html'});
@@ -37,7 +39,7 @@ exports.myModule = function(req, res) {
     }
   }
   else if (req.method === "POST") {
-    if (req.url === '/character/create') {
+    if (restOfURL === '/character/create') {
       var newId = shortid.generate();
       var body = "";
       req.on("data", function (chunk) {
@@ -62,7 +64,7 @@ exports.myModule = function(req, res) {
         res.end();
       });
     }
-    else if (req.url === '/character/update') {
+    else if (restOfURL === '/character/update') {
       var body = "";
       req.on("data", function (chunk) {
         body += chunk;
@@ -86,7 +88,7 @@ exports.myModule = function(req, res) {
         res.end();
       });
     }
-    else if (req.url === '/character/delete') {
+    else if (restOfURL === '/character/delete') {
       var body = "";
       req.on("data", function (chunk) {
         body += chunk;

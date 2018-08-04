@@ -3,11 +3,12 @@ const url = require("url");
 const fs = require("fs");
 const qs = require("querystring");
 const ejs = require("ejs")
-var shortid = require("shortid")
-var character = require('./character.js')
+const shortid = require("shortid")
+const character = require('./character.js')
 const PORT = process.env.PORT || 8080
 const server = http.createServer(function (req, res) {
-  if (req.url.startsWith("/character")) {
+  var pieces = req.url.split('/')
+  if (pieces[1] === "character") {
     character.myModule(req, res)
   }
   else if (req.method === "GET") {

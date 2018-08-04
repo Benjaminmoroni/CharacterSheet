@@ -21,7 +21,37 @@
           <fieldset>
             <form  class="form-horizontal" method="post" action="/character/update" enctype="application/x-www-form-urlencoded">
               <div class="form-group"><label class="control-label col-sm-3" for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=characters[id].CharacterName%>" /></div>
-              <div class="form-group"><label class="control-label col-sm-3" for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
+              <div class="form-group"><label class="control-label col-sm-3" for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /><select id="Race" name="Race" />
+                <option value="Aarakocra">Aarakocra</option>
+                <option value="Aasimar">Aasimar</option>
+                <option value="Bugbear">Bugbear</option>
+                <option value="Centaur">Centaur</option>
+                <option value="Dragonborn">Dragonborn</option>
+                <option value="Dwarf">Dwarf</option>
+                <option value="Elf">Elf</option>
+                <option value="FeralTiefling">Feral Tiefling</option>
+                <option value="Firbolg">Firbolg</option>
+                <option value="Genasi">Genasi</option>
+                <option value="Gith">Gith</option>
+                <option value="Gnome">Gnome</option>
+                <option value="Goblin">Goblin</option>
+                <option value="Goliath">Goliath</option>
+                <option value="Half-Elf">Half-Elf</option>
+                <option value="Halfling">Halfling</option>
+                <option value="Half-Orc">Half-Orc</option>
+                <option value="Hobgoblin">Hobgoblin</option>
+                <option value="Human">Human</option>
+                <option value="Kenku">Kenku</option>
+                <option value="Kobold">kobold</option>
+                <option value="Lizardfolk">Lizardfolk</option>
+                <option value="Minotaur">Minotaur</option>
+                <option value="Orc">Orc</option>
+                <option value="Tabaxi">Tabaxi</option>
+                <option value="Tiefling">Tiefling</option>
+                <option value="Tortle">Tortle</option>
+                <option value="Triton">Triton</option>
+                <option value="Yuan-tiPureblood">Yuan-ti Pureblood</option>
+              </select></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
               <div class="form-group"><label class="control-label col-sm-3" for="Strength">Strength:</label><input type="number" id="strength_<%=id%>" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
               <input class="btn btn-default" id="strengthEdit_<%=id%>" type="button" value="edit" /></div>
