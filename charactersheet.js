@@ -8,8 +8,10 @@ const character = require('./character.js')
 const PORT = process.env.PORT || 8080
 const server = http.createServer(function (req, res) {
   var pieces = req.url.split('/')
-  if (pieces[1] === "character") {
-    character.myModule(req, res)
+  var controller = pieces[1]
+  var action = pieces[2]
+  if (controller === "character") {
+    character[action](req, res)
   }
   else if (req.method === "GET") {
     var pathname = url.parse(req.url, true).pathname;
