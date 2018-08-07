@@ -1,12 +1,10 @@
-
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const qs = require("querystring");
 const ejs = require("ejs");
 const shortid = require("shortid")
-
-
+//handles requests for /character/sheets, whether from /character/creation or direct. Displays charactersheet.html rendering characters.json with ejs
 exports.sheets = function(req, res) {
   let rawdata = fs.readFileSync("./characters.json");
   let characters = JSON.parse(rawdata);
@@ -24,6 +22,7 @@ exports.sheets = function(req, res) {
     });
   }
 }
+//handles requests for /character/creation. Displays characterchreatioon.html
 exports.creation = function(req, res) {
   fs.readFile("charactercreation.html", function(err, data){
     if (err) {
@@ -37,6 +36,7 @@ exports.creation = function(req, res) {
     }
   })
 }
+//Handles requests for /character/create, which is a form submit from /character/creation (charactercreation.html). Adds form data to characters.json
 exports.create = function(req, res) {
   if (req.method === "POST") {
     var newId = shortid.generate();
@@ -64,6 +64,7 @@ exports.create = function(req, res) {
       return res.end("Not Created - 404 Not Found");
   }
 }
+//Handles requests for /character/update, which is a form submit from /character/sheets (charactersheet.html). Updates characters in characters.json
 exports.update = function(req, res) {
   var body = "";
   req.on("data", function (chunk) {
@@ -84,6 +85,7 @@ exports.update = function(req, res) {
     res.end();
   });
 }
+//Handles requests for /character/delete, which is a form submit from /character/sheets (charactersheet.html). Deletes characters in characters.json
 exports.delete = function(req, res) {
   var body = "";
   req.on("data", function (chunk) {

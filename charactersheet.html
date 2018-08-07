@@ -10,11 +10,12 @@
 
 <body>
   <div class="control-label col-sm-1"></div><h3>Characters</h3>
+<!--opening tag for rendering all characters in characters.json using ejs-->
   <% for(var id of Object.keys(characters)) { %>
-
-  <div class="control-label col-sm-1"></div><button id="myBtn_<%=id%>" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal_<%=id%>"><%=characters[id].CharacterName%></button><br><br>
-
-  <div id="myModal_<%=id%>" class="modal fade" role="dialog">
+<!--Turns each character name into a button that opens a modal with character information in it-->
+  <div class="control-label col-sm-1"></div><button id="characterBtn_<%=id%>" type="button" class="btn btn-success" data-toggle="modal" data-target="#characterModal_<%=id%>"><%=characters[id].CharacterName%></button><br><br>
+<!--Creations modal with character information in a form that can be edited and will update characters.json-->
+  <div id="characterModal_<%=id%>" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -22,9 +23,9 @@
             <form  class="form-horizontal" method="post" action="/character/update" enctype="application/x-www-form-urlencoded">
               <div class="form-group"><label class="control-label col-sm-3" for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName" value= "<%=characters[id].CharacterName%>" /></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
-              <div class="form-group"><label class="control-label col-sm-3" for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
+              <div class="form-group"><label class="control-label col-sm-3" for="Class">Class:</label><input type="text" id="Class" name="Class" value= "" /></div><br>
               <div class="form-group"><label class="control-label col-sm-3" for="Strength">Strength:</label><input type="number" id="strength_<%=id%>" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
-              <input class="btn btn-default" id="strengthEdit_<%=id%>" type="button" value="edit" /></div>
+              <input class="btn btn-default" id="strengthEdit_<%=id%>" type="button" value="edit" /><input type="number" id="strength_mod_<%=id%>" name="Strengthmod" value= "" min="-5" max="10" readonly="readonly"/></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Dexterity">Dexterity:</label><input type="number" id="dexterity_<%=id%>" name="Dexterity" value= "<%=characters[id].Dexterity%>" min="3" max="30" readonly="readonly"/>
               <input class="btn btn-default" id="dexterityEdit_<%=id%>" type="button" value="edit" /></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Constitution">Constitution:</label><input type="number" id="constitution_<%=id%>" name="Constitution" value= "<%=characters[id].Constitution%>" min="3" max="30" readonly="readonly"/>
@@ -35,49 +36,103 @@
               <input class="btn btn-default" id="wisdomEdit_<%=id%>" type="button" value="edit" /></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Charisma">Charisma:</label><input type="number" id="charisma_<%=id%>" name="Charisma" value= "<%=characters[id].Charisma%>" min="3" max="30" readonly="readonly"/>
               <input class="btn btn-default" id="charismaEdit_<%=id%>" type="button" value="edit" /></div>
+<!--A form button for testing. Specifically trying to incorporate AJAX on this page-->
+              <div class="form-group"><label class="control-label col-sm-3" for="test">Test:</label><input type="number" id="test_<%=id%>" name="Test" value= "<%=characters[id].Test%>" min="3" max="30" readonly="readonly"/>
+              <input class="btn btn-default" id="testEdit_<%=id%>" type="button" value="edit" /></div><div id='demo'></div>
+
               <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
             </form>
-            <form method="post" action="/character/delete" enctype="application/x-www-form-urlencoded">
-              <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
-              <input class="btn btn-danger" id="deleteCharacter" type="submit" value="Delete Character Forever; Do Not Click Accidentally" />
-            </form>
+<!--Button opens midal for deleting charater from the characters.json-->
+            <button id="deleteBtn_<%=id%>" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_<%=id%>">Delete <%=characters[id].CharacterName%></button>
+<!--Modal for deleting character-->
+            <div id="deleteModal_<%=id%>" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <form method="post" action="/character/delete" enctype="application/x-www-form-urlencoded">
+                      <input type="hidden" id="characterId" name="characterId" value= "<%=id%>" />
+                      <input class="btn btn-danger" id="deleteCharacter" type="submit" value="Delete Character Forever; Do Not Click Accidentally" />
+<!--This button currently closes both modals, but it needs to only close the delete modal-->
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </fieldset>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
 
           <script>
+//Attempting to try using AJAX to update character data in characters.json
+          var difference_<%=id%> = <%=characters[id].Strength%> - 10
+          var modifier_<%=id%> = function mod_<%=id%>() {
+            if (difference_<%=id%> < 0 === true) {
+              var x_<%=id%> = difference_<%=id%> / 2
+              return math.ceiling(x_<%=id%>)};
+            if (difference_<%=id%> < 0 === false) {
+              var x_<%=id%> = difference_<%=id%> / 2
+              return math.floor(x_<%=id%>)};
+          }
+          document.getElementById('strength_mod_<%=id%>').setAttribute('value', modifier_<%=id%>)
+
+          function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("demo").innerHTML = "saved";
+              }
+            };
+            xhttp.open("POST", "/character/update", true);
+            xhttp.send();
+          }
+//script for edit and save buttons in modal
+          document.getElementById('testEdit_<%=id%>').onclick = function() {
+            if (document.getElementById('test_<%=id%>').readOnly === true) {
+              document.getElementById('test_<%=id%>').removeAttribute('readonly');
+              document.getElementById('testEdit_<%=id%>').setAttribute('value', 'save');
+              document.getElementById('testEdit_<%=id%>').setAttribute('onclick', 'loadDoc()');
+            }
+            else {
+
+              //document.getElementById('testEdit_<%=id%>').setAttribute('type', 'submit');
+              document.getElementById('testEdit_<%=id%>').setAttribute('value', 'edit');
+              document.getElementById('test_<%=id%>').setAttribute('readonly', 'readonly');
+            }
+          };
+
           document.getElementById('strengthEdit_<%=id%>').onclick = function() {
-            if (document.getElementById('strength_<%=id%>').readOnly === true)
-              {
+            if (document.getElementById('strength_<%=id%>').readOnly === true) {
               document.getElementById('strength_<%=id%>').removeAttribute('readonly');
               document.getElementById('strengthEdit_<%=id%>').setAttribute('value', 'save');
-            } else {
-             document.getElementById('strengthEdit_<%=id%>').setAttribute('type', 'submit');
-             document.getElementById('strengthEdit_<%=id%>').setAttribute('value', 'edit');
-             document.getElementById('strength_<%=id%>').setAttribute('readonly', 'readonly');
+            }
+            else {
+              document.getElementById('strengthEdit_<%=id%>').setAttribute('type', 'submit');
+              document.getElementById('strengthEdit_<%=id%>').setAttribute('value', 'edit');
+              document.getElementById('strength_<%=id%>').setAttribute('readonly', 'readonly');
             }
           };
           document.getElementById('dexterityEdit_<%=id%>').onclick = function() {
-            if (document.getElementById('dexterity_<%=id%>').readOnly === true)
-              {
+            if (document.getElementById('dexterity_<%=id%>').readOnly === true) {
               document.getElementById('dexterity_<%=id%>').removeAttribute('readonly');
               document.getElementById('dexterityEdit_<%=id%>').setAttribute('value', 'save');
-            } else {
+            }
+            else {
              document.getElementById('dexterityEdit_<%=id%>').setAttribute('type', 'submit');
              document.getElementById('dexterityEdit_<%=id%>').setAttribute('value', 'edit');
              document.getElementById('dexterity_<%=id%>').setAttribute('readonly', 'readonly');
             }
           };
           document.getElementById('constitutionEdit_<%=id%>').onclick = function() {
-            if (document.getElementById('constitution_<%=id%>').readOnly === true)
-              {
+            if (document.getElementById('constitution_<%=id%>').readOnly === true) {
               document.getElementById('constitution_<%=id%>').removeAttribute('readonly');
               document.getElementById('constitutionEdit_<%=id%>').setAttribute('value', 'save');
-            } else {
-             document.getElementById('constitutionEdit_<%=id%>').setAttribute('type', 'submit');
-             document.getElementById('constitutionEdit_<%=id%>').setAttribute('value', 'edit');
-             document.getElementById('constitution_<%=id%>').setAttribute('readonly', 'readonly');
+            }
+            else {
+              document.getElementById('constitutionEdit_<%=id%>').setAttribute('type', 'submit');
+              document.getElementById('constitutionEdit_<%=id%>').setAttribute('value', 'edit');
+              document.getElementById('constitution_<%=id%>').setAttribute('readonly', 'readonly');
             }
           };
           document.getElementById('intelligenceEdit_<%=id%>').onclick = function() {
