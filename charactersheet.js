@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8080
 const server = http.createServer(function(req, res) {
   var pieces = req.url.split('/')
   var controller = pieces[1]
-  var action = pieces[2
+  var action = pieces[2]
 //handles all requests for /character through character.js
   if (controller === "character") {
     character[action](req, res)
