@@ -51,28 +51,23 @@ router.post('/login', function(req, res){
   });
   req.on("end", function(){
     var formData = qs.parse(body);
-    console.log("password from form: "+formData.psw2)
     let email = formData.email2
-    bcrypt.hash(formData.psw2, 10, function(err, hash) {
-      let password = hash
-      console.log(password)
-      con.query("SELECT password FROM users WHERE email = ?", [email], function (err, result, fields) {
-        if (err) throw err;
-        console.log(result)
-        bcrypt.compare(formData.psw2, result, function(err, doesMatch){
-          if (doesMatch){
-            res.send({
-               "code":200,
-               "success":"login sucessfull"
-            });
-          }
-          else{
-            res.send({
-               "code":204,
-               "success":"Email and password does not match"
-            });
-          }
-        });
+    let password = formData.psw2
+    con.query("SELECT password FROM users WHERE email = ?", [email], function (err, result, fields) {
+      if (err) throw err;
+      bcrypt.compare(password, result[0].password, function(err, doesMatch){
+        if (doesMatch){
+          res.send({
+             "code":200,
+             "success":"login sucessfull"
+          });
+        }
+        else{
+          res.send({
+             "code":204,
+             "success":"Email and password does not match"
+          });
+        }
       });
     });
   });
