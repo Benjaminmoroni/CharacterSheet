@@ -11,9 +11,10 @@ var con = mysql.createConnection({
   password: "root1234",
   database: "test"
 });
-con.connect(function(err) {
-  if (err) throw err;
-});
+
+var cookieParser = require('cookie-parser'); // module for parsing cookies
+var app = express();
+app.use(cookieParser());
 
 var router = express.Router();
 module.exports = router;
@@ -40,7 +41,7 @@ router.post('/register', function(req, res){
         console.log("1 record inserted");
       });
     });
-    res.writeHead(302, {'Location': '/character/sheets'});
+    res.writeHead(302, {'Location': '/login'});
     res.end();
   })
 })
@@ -53,20 +54,18 @@ router.post('/login', function(req, res){
     var formData = qs.parse(body);
     let email = formData.email2
     let password = formData.psw2
-    con.query("SELECT password FROM users WHERE email = ?", [email], function (err, result, fields) {
+    con.query("SELECT * FROM users WHERE email = ?", [email], function (err, result, fields) {
       if (err) throw err;
       bcrypt.compare(password, result[0].password, function(err, doesMatch){
         if (doesMatch){
-          res.send({
-             "code":200,
-             "success":"login sucessfull"
-          });
+          res.cookie('username', result[0].email, { maxAge: 900000, httpOnly: true });
+          console.log('Cookie has been set');
+          res.writeHead(302, {'Location': '/character/sheets'});
+          res.end();
         }
         else{
-          res.send({
-             "code":204,
-             "success":"Email and password does not match"
-          });
+          res.writeHead(302, {'Location': '/'});
+          res.end();
         }
       });
     });

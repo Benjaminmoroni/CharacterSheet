@@ -11,9 +11,11 @@ var con = mysql.createConnection({
   password: "root1234",
   database: "test"
 });
-con.connect(function(err) {
-  if (err) throw err;
-});
+
+var cookieParser = require('cookie-parser'); // module for parsing cookies
+var app = express();
+app.use(cookieParser());
+
 var router = express.Router();
 module.exports = router;
 
@@ -21,14 +23,26 @@ router.get('/creation', function(req, res) {
   res.sendFile(path.join(__dirname, "../charactercreation.html"))
 });
 router.get('/sheets', function(req, res) {
-    con.query("SELECT * FROM characters", function (err, result, fields) {
+  var username = req.cookies['username'];
+  if (username) {
+    console.log(username)
+    con.query("SELECT id FROM users WHERE email = ?", [username], function (err,result,fields) {
       if (err) throw err;
-      let characters = result
-      ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
-        res.write (str);
-        res.end()
+      con.query("SELECT * FROM characters WHERE user_id = ?", [result[0].id], function (err, result, fields) {
+        if (err) throw err;
+        let characters = result
+        ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
+          res.write (str);
+          res.end()
+        });
       });
-    });
+    })
+
+  } else {
+    console.log('no cookie found')
+    return res.writeHead(302, {'Location': '/'});
+    res.end();
+  }
 })
 router.post('/update', function(req, res) {
   var body = "";
