@@ -5,6 +5,7 @@ var qs = require('querystring')
 var shortid = require("shortid")
 var bcrypt = require('bcrypt');
 var mysql = require('mysql');
+var crypto = require('crypto');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -58,7 +59,10 @@ router.post('/login', function(req, res){
       if (err) throw err;
       bcrypt.compare(password, result[0].password, function(err, doesMatch){
         if (doesMatch){
-          res.cookie('username', result[0].email, { maxAge: 900000, httpOnly: true });
+          var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
+          var mystr = mykey.update(result[0].id, 'utf8', 'hex')
+          mystr += mykey.final('hex');
+          res.cookie('username', mystr, { maxAge: 900000, httpOnly: true });
           console.log('Cookie has been set');
           res.writeHead(302, {'Location': '/character/sheets'});
           res.end();
@@ -70,4 +74,15 @@ router.post('/login', function(req, res){
       });
     });
   });
+})
+router.post('/logout', function(req, res){
+  var body = "";
+  req.on("data", function (chunk) {
+    body += chunk;
+  });
+  req.on("end", function(){
+    res.clearCookie('username');
+    res.writeHead(302, {'Location': '/'});
+    res.end();
+  })
 })

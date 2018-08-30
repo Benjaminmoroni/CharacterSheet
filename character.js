@@ -4,6 +4,9 @@ const fs = require("fs");
 const qs = require("querystring");
 const ejs = require("ejs");
 const shortid = require("shortid")
+var crypto = require('crypto');
+
+app.use(cookieParser());
 //handles requests for /character/sheets, whether from /character/creation or direct. Displays charactersheet.html rendering characters.json with ejs
 exports.sheets = function(req, res) {
   let rawdata = fs.readFileSync("./characters.json");

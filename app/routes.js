@@ -5,6 +5,7 @@ var path = require('path');
 var qs = require('querystring')
 var shortid = require("shortid")
 var mysql = require('mysql');
+var crypto = require('crypto');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -24,25 +25,19 @@ router.get('/creation', function(req, res) {
 });
 router.get('/sheets', function(req, res) {
   var username = req.cookies['username'];
-  if (username) {
-    console.log(username)
-    con.query("SELECT id FROM users WHERE email = ?", [username], function (err,result,fields) {
-      if (err) throw err;
-      con.query("SELECT * FROM characters WHERE user_id = ?", [result[0].id], function (err, result, fields) {
-        if (err) throw err;
-        let characters = result
-        ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
-          res.write (str);
-          res.end()
-        });
-      });
-    })
+  var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
+  var mystr = mykey.update(username, 'hex', 'utf8')
+  mystr += mykey.final('utf8');
 
-  } else {
-    console.log('no cookie found')
-    return res.writeHead(302, {'Location': '/'});
-    res.end();
-  }
+
+    con.query("SELECT * FROM characters WHERE user_id = ?", [mystr], function (err, result, fields) {
+      if (err) throw err;
+      let characters = result
+      ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
+        res.write (str);
+        res.end()
+      });
+    });
 })
 router.post('/update', function(req, res) {
   var body = "";
@@ -71,9 +66,14 @@ router.post('/create', function(req, res) {
   req.on("end", function(){
     var formData = qs.parse(body);
     formData.id = newId
-    var sql = "INSERT INTO characters SET CharacterId = ?, CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ?";
-    //var values =
-    con.query(sql, [formData.id, formData.CharacterName, formData.Race, formData.Class, formData.Strength, formData.Dexterity, formData.Constitution, formData.Wisdom, formData.Intelligence, formData.Charisma], function (err, result, fields) {
+
+    var username = req.cookies['username'];
+    var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
+    var mystr = mykey.update(username, 'hex', 'utf8')
+    mystr += mykey.final('utf8');
+
+    var sql = "INSERT INTO characters SET CharacterId = ?, CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ?, user_id = ?";
+    con.query(sql, [formData.id, formData.CharacterName, formData.Race, formData.Class, formData.Strength, formData.Dexterity, formData.Constitution, formData.Wisdom, formData.Intelligence, formData.Charisma, mystr], function (err, result, fields) {
       if (err) throw err;
       console.log("1 record inserted");
     });
