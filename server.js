@@ -1,15 +1,27 @@
-var express = require('express');
-var ejs = require('ejs');
-var fs = require('fs');
-var path = require('path');
-var qs = require('querystring');
-var shortid = require("shortid");
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var crypto = require('crypto');
-var mysql = require('mysql');
+const express = require('express');
+const session = require('express-session');
+const ejs = require('ejs');
+const fs = require('fs');
+const path = require('path');
+const qs = require('querystring');
+const shortid = require("shortid");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const crypto = require('crypto');
+const mysql = require('mysql');
+const passport = require('passport');
 
 var app = express();
+
+
+app.use(express.static('public'));
+app.use(express.cookieParser());
+app.use(express.bodyParser());
+app.use(express.session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(app.router);
+
 var port = process.env.PORT || 8080;
 
 var router = require('./app/routes.js');

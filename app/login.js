@@ -6,6 +6,27 @@ var shortid = require("shortid")
 var bcrypt = require('bcrypt');
 var mysql = require('mysql');
 var crypto = require('crypto');
+var passport = require('passport');
+var LocalStrategy = require('passport-local')
+/*
+passport.use(new LocalStrategy({
+    usernameField: 'email2',
+    passwordField: 'psw2'
+  },
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+*/
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -46,6 +67,13 @@ router.post('/register', function(req, res){
     res.end();
   })
 })
+/*
+router.post('/login',
+  passport.authenticate('local', { successRedirect: '/character/sheets',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+*/
 router.post('/login', function(req, res){
   var body = "";
   req.on("data", function (chunk) {
