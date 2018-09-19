@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   database: "test"
 });
 
-var cookieParser = require('cookie-parser'); // module for parsing cookies
+var cookieParser = require('cookie-parser');
 var app = express();
 app.use(cookieParser());
 
@@ -24,13 +24,7 @@ router.get('/creation', function(req, res) {
   res.sendFile(path.join(__dirname, "../charactercreation.html"))
 });
 router.get('/sheets', function(req, res) {
-  var username = req.cookies['username'];
-  var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-  var mystr = mykey.update(username, 'hex', 'utf8')
-  mystr += mykey.final('utf8');
-
-
-    con.query("SELECT * FROM characters WHERE user_id = ?", [mystr], function (err, result, fields) {
+    con.query("SELECT * FROM characters WHERE user_id = ?", [req.user.user.id], function (err, result, fields) {
       if (err) throw err;
       let characters = result
       ejs.renderFile("charactersheet.html", {"characters":characters}, function(err, str){
@@ -40,62 +34,40 @@ router.get('/sheets', function(req, res) {
     });
 })
 router.post('/update', function(req, res) {
-  var body = "";
-  req.on("data", function (chunk) {
-    body += chunk;
-  });
-  req.on("end", function(){
-    var formData = qs.parse(body);
-    var id = formData.characterId
-    var sql = "UPDATE characters SET CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ? WHERE CharacterId = ?";
+  var formData = req.body
+  var id = formData.characterId
+  var sql = "UPDATE characters SET CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ? WHERE CharacterId = ?";
 
-    con.query(sql, [formData.CharacterName, formData.Race, formData.Class, formData.Strength, formData.Dexterity, formData.Constitution, formData.Wisdom, formData.Intelligence, formData.Charisma, formData.characterId], function (err, result, fields) {
-      if (err) throw err;
-      console.log(result.affectedRows + " record(s) updated");
-    });
-    res.writeHead(302, {'Location': '/character/sheets'});
-    res.end();
+  con.query(sql, [formData.CharacterName, formData.Race, formData.Class, formData.Strength, formData.Dexterity, formData.Constitution, formData.Wisdom, formData.Intelligence, formData.Charisma, formData.characterId], function (err, result, fields) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
   });
-})
+  res.writeHead(302, {'Location': '/character/sheets'});
+  res.end();
+});
 router.post('/create', function(req, res) {
+  console.log('router.post(/create)')
   var newId = shortid.generate();
-  var body = "";
-  req.on("data", function (chunk) {
-    body += chunk;
-  });
-  req.on("end", function(){
-    var formData = qs.parse(body);
-    formData.id = newId
+  var formData = req.body
+  formData.id = newId
 
-    var username = req.cookies['username'];
-    var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-    var mystr = mykey.update(username, 'hex', 'utf8')
-    mystr += mykey.final('utf8');
-
-    var sql = "INSERT INTO characters SET CharacterId = ?, CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ?, user_id = ?";
-    con.query(sql, [formData.id, formData.CharacterName, formData.Race, formData.Class, formData.Strength, formData.Dexterity, formData.Constitution, formData.Wisdom, formData.Intelligence, formData.Charisma, mystr], function (err, result, fields) {
-      if (err) throw err;
-      console.log("1 record inserted");
-    });
-    res.writeHead(302, {'Location': '/character/sheets'});
-    res.end();
+  var sql = "INSERT INTO characters SET CharacterId = ?, CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ?, user_id = ?";
+  con.query(sql, [formData.id, formData.CharacterName, formData.Race, formData.Class, formData.Strength, formData.Dexterity, formData.Constitution, formData.Wisdom, formData.Intelligence, formData.Charisma, req.user.user.id], function (err, result, fields) {
+    if (err) throw err;
+    console.log("1 record inserted");
   });
-})
+  res.writeHead(302, {'Location': '/character/sheets'});
+  res.end();
+});
 router.post('/delete', function(req, res) {
-  var body = "";
-  req.on("data", function (chunk) {
-    body += chunk;
+  var formData = req.body
+  var id = formData.characterId
+  console.log(formData.characterId)
+  var sql = "DELETE FROM characters WHERE characterId = ?";
+  con.query(sql, [formData.characterId], function (err, result) {
+    if (err) throw err;
+    console.log("Number of records deleted: " + result.affectedRows);
   });
-  req.on("end", function(){
-    var formData = qs.parse(body);
-    var id = formData.characterId
-    console.log(formData.characterId)
-    var sql = "DELETE FROM characters WHERE characterId = ?";
-    con.query(sql, [formData.characterId], function (err, result) {
-      if (err) throw err;
-      console.log("Number of records deleted: " + result.affectedRows);
-    });
-    res.writeHead(302, {'Location': '/character/sheets'});
-    res.end();
-  });
-})
+  res.writeHead(302, {'Location': '/character/sheets'});
+  res.end();
+});

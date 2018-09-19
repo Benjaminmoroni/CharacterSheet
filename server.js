@@ -10,18 +10,18 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const mysql = require('mysql');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
+require('./passport')
 
 var app = express();
 
 
 app.use(express.static('public'));
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(app.router);
-
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 var port = process.env.PORT || 8080;
 
 var router = require('./app/routes.js');
@@ -37,7 +37,6 @@ con.connect(function(err) {
   if (err) throw err;
 });
 
-app.use(cookieParser());
 app.get('/', function (req, res) {
   res.writeHead(302, {'Location': '/login'});
   res.end();
@@ -46,11 +45,12 @@ app.use('/login', login)
 app.use(function(req, res, next){
   var username = req.cookies['username'];
   if (username) {
-    var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-    var mystr = mykey.update(username, 'hex', 'utf8')
-    mystr += mykey.final('utf8');
-    console.log(mystr);
-    next();
+    jwt.verify(username, 'top_secret', function(err, decoded){
+      if(!err){
+        req.user = decoded;
+        next()}
+      else {throw new Error('something bad happened')}
+    })
   } else {
   console.log('no cookie found')
   res.writeHead(302, {'Location': '/login'});
