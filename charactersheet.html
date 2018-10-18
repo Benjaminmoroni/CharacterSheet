@@ -25,7 +25,7 @@
               <div class="form-group"><label class="control-label col-sm-3" for="Race">Race:</label><input type="text" id="Race" name="Race" value= "<%=characters[id].Race%>" /></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Class">Class:</label><input type="text" id="Class" name="Class" value= "<%=characters[id].Class%>" /></div><br>
               <div class="form-group"><label class="control-label col-sm-3" for="Strength">Strength:</label><input type="number" id="strength_<%=characters[id].characterId%>" name="Strength" value= "<%=characters[id].Strength%>" min="3" max="30" readonly="readonly"/>
-              <input class="btn btn-default" id="strengthEdit_<%=characters[id].characterId%>" type="button" value="edit" /><input type="number" id="strength_mod_<%=characters[id].characterId%>" name="Strengthmod" value= "" min="-5" max="10" readonly="readonly"/></div>
+              <input class="btn btn-default" id="strengthEdit_<%=characters[id].characterId%>" type="button" value="edit" /><!--<input type="number" id="strength_mod_<%=characters[id].characterId%>" name="Strengthmod" value= "" min="-5" max="10" readonly="readonly"/>--></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Dexterity">Dexterity:</label><input type="number" id="dexterity_<%=characters[id].characterId%>" name="Dexterity" value= "<%=characters[id].Dexterity%>" min="3" max="30" readonly="readonly"/>
               <input class="btn btn-default" id="dexterityEdit_<%=characters[id].characterId%>" type="button" value="edit" /></div>
               <div class="form-group"><label class="control-label col-sm-3" for="Constitution">Constitution:</label><input type="number" id="constitution_<%=characters[id].characterId%>" name="Constitution" value= "<%=characters[id].Constitution%>" min="3" max="30" readonly="readonly"/>
@@ -66,6 +66,7 @@
 
           <script>
 //Attempting to try using AJAX to update character data in characters.json
+/*
           var difference_<%=characters[id].characterId%> = <%=characters[id].Strength%> - 10
           var modifier_<%=characters[id].characterId%> = function mod_<%=characters[id].characterId%>() {
             if (difference_<%=characters[id].characterId%> < 0 === true) {
@@ -75,8 +76,9 @@
               var x_<%=characters[id].characterId%> = difference_<%=characters[id].characterId%> / 2
               return math.floor(x_<%=characters[id].characterId%>)};
           }
-          document.getElementById('strength_mod_<%=characters[id].characterId%>').setAttribute('value', modifier_<%=characters[id].characterId%>)
 
+          document.getElementById('strength_mod_<%=characters[id].characterId%>').setAttribute('value', modifier_<%=characters[id].characterId%>)
+*/
           function loadDoc() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -85,30 +87,32 @@
               }
             };
             xhttp.open("POST", "/character/update", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send();
           }
+          /*
 //script for edit and save buttons in modal
           document.getElementById('testEdit_<%=characters[id].characterId%>').onclick = function() {
             if (document.getElementById('test_<%=characters[id].characterId%>').readOnly === true) {
               document.getElementById('test_<%=characters[id].characterId%>').removeAttribute('readonly');
               document.getElementById('testEdit_<%=characters[id].characterId%>').setAttribute('value', 'save');
-              document.getElementById('testEdit_<%=characters[id].characterId%>').setAttribute('onclick', 'loadDoc()');
             }
             else {
 
-              //document.getElementById('testEdit_<%=characters[id].characterId%>').setAttribute('type', 'submit');
+              document.getElementById('testEdit_<%=characters[id].characterId%>').setAttribute('type', 'submit');
               document.getElementById('testEdit_<%=characters[id].characterId%>').setAttribute('value', 'edit');
               document.getElementById('test_<%=characters[id].characterId%>').setAttribute('readonly', 'readonly');
             }
           };
-
+*/
           document.getElementById('strengthEdit_<%=characters[id].characterId%>').onclick = function() {
             if (document.getElementById('strength_<%=characters[id].characterId%>').readOnly === true) {
               document.getElementById('strength_<%=characters[id].characterId%>').removeAttribute('readonly');
               document.getElementById('strengthEdit_<%=characters[id].characterId%>').setAttribute('value', 'save');
+              document.getElementById('strengthEdit_<%=characters[id].characterId%>').setAttribute('onclick', 'loadDoc()')
             }
             else {
-              document.getElementById('strengthEdit_<%=characters[id].characterId%>').setAttribute('type', 'submit');
+              //document.getElementById('strengthEdit_<%=characters[id].characterId%>').setAttribute('type', 'submit');
               document.getElementById('strengthEdit_<%=characters[id].characterId%>').setAttribute('value', 'edit');
               document.getElementById('strength_<%=characters[id].characterId%>').setAttribute('readonly', 'readonly');
             }

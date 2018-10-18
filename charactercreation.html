@@ -1,72 +1,277 @@
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+​
 
-</head>
-
-<body>
-  <h1>Character Creation</h1><a href="/character/sheets">Back to Character Sheets</a>
-  <form class="form-horizontal" method="post" action="/character/create" enctype="application/x-www-form-urlencoded"><fieldset>
-   <div class="form-group"><label class="control-label col-sm-1" for="CharacterName">Character Name:</label><input type="text" id="CharacterName" name="CharacterName"/></div><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Race">Race:</label><select id="Race" name="Race" />
-     <option value="Aarakocra">Aarakocra</option>
-     <option value="Aasimar">Aasimar</option>
-     <option value="Bugbear">Bugbear</option>
-     <option value="Centaur">Centaur</option>
-     <option value="Dragonborn">Dragonborn</option>
-     <option value="Dwarf">Dwarf</option>
-     <option value="Elf">Elf</option>
-     <option value="FeralTiefling">Feral Tiefling</option>
-     <option value="Firbolg">Firbolg</option>
-     <option value="Genasi">Genasi</option>
-     <option value="Gith">Gith</option>
-     <option value="Gnome">Gnome</option>
-     <option value="Goblin">Goblin</option>
-     <option value="Goliath">Goliath</option>
-     <option value="Half-Elf">Half-Elf</option>
-     <option value="Halfling">Halfling</option>
-     <option value="Half-Orc">Half-Orc</option>
-     <option value="Hobgoblin">Hobgoblin</option>
-     <option value="Human">Human</option>
-     <option value="Kenku">Kenku</option>
-     <option value="Kobold">kobold</option>
-     <option value="Lizardfolk">Lizardfolk</option>
-     <option value="Minotaur">Minotaur</option>
-     <option value="Orc">Orc</option>
-     <option value="Tabaxi">Tabaxi</option>
-     <option value="Tiefling">Tiefling</option>
-     <option value="Tortle">Tortle</option>
-     <option value="Triton">Triton</option>
-     <option value="Yuan-tiPureblood">Yuan-ti Pureblood</option>
-   </select></div>
-   <div class="form-group"><label class="control-label col-sm-1" for="Class">Class:</label><select id="Class" name="Class" /></div>
-     <option value="Barbarian">Barbarian</option>
-     <option value="Bard">Bard</option>
-     <option value="Cleric">Cleric</option>
-     <option value="Druid">Druid</option>
-     <option value="Fighter">Fighter</option>
-     <option value="Monk">Monk</option>
-     <option value="Paladin">Paladin</option>
-     <option value="Ranger">Ranger</option>
-     <option value="Rogue">Rogue</option>
-     <option value="Socerer">Sorcerer</option>
-     <option value="Warlock">Warlock</option>
-     <option value="Wizard">Wizard</option>
-   </select>
-   <br><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Strength">Strength:</label><input type="number" id="Strength" name="Strength" min="3" max="18" step="1"/></div><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Dexterity">Dexterity:</label><input type="number" id="Dexterity" name="Dexterity" min="3" max="18"></div><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Constitution">Constitution:</label><input type="number" id="Constitution" name="Constitution" min="3" max="18"></div><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Intelligence">Intelligence:</label><input type="number" id="Intelligence" name="Intelligence" min="3" max="18"></div><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Wisdom">Wisdom:</label><input type="number" id="Wisdom" name="Wisdom" min="3" max="18"></div><br>
-   <div class="form-group"><label class="control-label col-sm-1" for="Charisma">Charisma:</label><input type="number" id="Charisma" name="Charisma" min="3" max="18"></div><br>
-   <div class="control-label col-sm-1"></div><div class="form-group"><input class="btn btn-default col-sm-2" id="AssignAttributes" type="submit" value="Assign Attributes" /></div></fieldset>
-  </form>
-
-
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+​
+  </head>
+​
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Ben's D&D App</a>
+        </div>
+​
+        <div class="btn-group">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Characters</button>
+            <div class="dropdown-menu">
+              <li><a class="dropdown-item" href="/character/sheets">Character Sheets</a></li>
+              <li class="active"><a class="dropdown-item" href="/character/creaion">Create Character</a></li>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Page 2</button>
+            <div class="dropdown-menu">
+              <li><a class="dropdown-item" href="/character/sheets">Character Sheets1</a></li>
+              <li><a class="dropdown-item" href="/character/creaion">Create Character1</a></li>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Page 3</button>
+            <div class="dropdown-menu">
+              <li><a class="dropdown-item" href="/character/sheets">Character Sheets2</a></li>
+              <li><a class="dropdown-item" href="/character/creaion">Create Character2</a></li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <h1>Character Creation</h1>
+      <form class="form-horizontal" method="post" action="/character/create" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+          <div>
+            <div class="col-xs-4">
+              <label class="control-label" for="CharacterName">Character Name:</label>
+            </div>
+            <div class="col-xs-2">
+              <input type="text" id="CharacterName" name="CharacterName" />
+            </div>
+          </div><br><br>
+          <div>
+            <div class="col-xs-2">
+              <label class="control-label" for="Race">Race:</label>
+            </div>
+            <div class="col-xs-3">
+              <select class="form-control col-xs-2" id="Race" name="Race">
+                <option value="Aarakocra">Aarakocra</option>
+                <option value="Aasimar">Aasimar</option>
+                <option value="Bugbear">Bugbear</option>
+                <option value="Centaur">Centaur</option>
+                <option value="Dragonborn">Dragonborn</option>
+                <option value="Dwarf">Dwarf</option>
+                <option value="Elf">Elf</option>
+                <option value="FeralTiefling">Feral Tiefling</option>
+                <option value="Firbolg">Firbolg</option>
+                <option value="Genasi">Genasi</option>
+                <option value="Gith">Gith</option>
+                <option value="Gnome">Gnome</option>
+                <option value="Goblin">Goblin</option>
+                <option value="Goliath">Goliath</option>
+                <option value="Half-Elf">Half-Elf</option>
+                <option value="Halfling">Halfling</option>
+                <option value="Half-Orc">Half-Orc</option>
+                <option value="Hobgoblin">Hobgoblin</option>
+                <option value="Human">Human</option>
+                <option value="Kenku">Kenku</option>
+                <option value="Kobold">kobold</option>
+                <option value="Lizardfolk">Lizardfolk</option>
+                <option value="Minotaur">Minotaur</option>
+                <option value="Orc">Orc</option>
+                <option value="Tabaxi">Tabaxi</option>
+                <option value="Tiefling">Tiefling</option>
+                <option value="Tortle">Tortle</option>
+                <option value="Triton">Triton</option>
+                <option value="Yuan-ti Pureblood">Yuan-ti Pureblood</option>
+              </select>
+            </div>
+            <div class="col-xs-7">
+            </div>
+        </div><br><br>
+        <div>
+          <div class="col-xs-2">
+            <label class="control-label col-xs-2" for="Class">Class:</label>
+          </div>
+          <div class="col-xs-3">
+            <select class="form-control col-xs-2" id="Class" name="Class">
+              <option value="Barbarian">Barbarian</option>
+              <option value="Bard">Bard</option>
+              <option value="Cleric">Cleric</option>
+              <option value="Druid">Druid</option>
+              <option value="Fighter">Fighter</option>
+              <option value="Monk">Monk</option>
+              <option value="Paladin">Paladin</option>
+              <option value="Ranger">Ranger</option>
+              <option value="Rogue">Rogue</option>
+              <option value="Socerer">Sorcerer</option>
+              <option value="Warlock">Warlock</option>
+              <option value="Wizard">Wizard</option>
+            </select>
+          </div>
+        </div><br><br>
+        <div>
+          <div class="col-xs-2">
+            <label class="control-label col-xs-2" for="Strength">Strength:</label>
+          </div>
+          <div class="col-xs-2">
+            <select class="form-control" id="Strength" name="Strength">
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+            </select>
+          </div>
+        </div><br><br>
+          <div>
+            <div class="col-xs-2">
+              <label class="control-label col-xs-2" for="Dexterity">Dexterity:</label>
+            </div>
+            <div class="col-xs-2">
+              <select class="form-control" type="number" id="Dexterity" name="Dexterity" min="3" max="18" step="1">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+              </select>
+            </div>
+          </div><br><br>
+          <div>
+            <div class="col-xs-2">
+              <label class="control-label col-xs-2" for="Constitution">Constitution:</label>
+            </div>
+            <div class="col-xs-2">
+              <select class="form-control" type="number" id="Constitution" name="Constitution" min="3" max="18">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+              </select>
+            </div>
+          </div><br><br>
+          <div>
+            <div class="col-xs-2">
+              <label class="control-label col-xs-2" for="Intelligence">Intelligence:</label>
+            </div>
+            <div class="col-xs-2">
+              <select class="form-control" type="number" id="Intelligence" name="Intelligence" min="3" max="18">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+              </select>
+            </div>
+          </div><br><br>
+          <div>
+            <div class="col-xs-2">
+              <label class="control-label col-xs-2" for="Wisdom">Wisdom:</label>
+            </div>
+            <div class="col-xs-2">
+              <select class="form-control col-xs-2" type="number" id="Wisdom" name="Wisdom" min="3" max="18">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+              </select>
+            </div>
+          </div><br><br>
+          <div>
+            <div class="col-xs-2">
+              <label class="control-label col-xs-2" for="Charisma">Charisma:</label>
+            </div>
+            <div class="col-xs-2">
+              <select class="form-control col-xs-2" type="number" id="Charisma" name="Charisma" min="3" max="18">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+              </select>
+            </div>
+          </div><br><br>
+          <div class="col-xs-6">
+            <input class="btn btn-default" id="AssignAttributes" type="submit" value="Assign Attributes" />
+          </div>
+        </div>
+      </form>
+​
+    </div>
   </body>
-  </html>
+​
+</html>
