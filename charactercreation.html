@@ -16,33 +16,36 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Ben's D&D App</a>
         </div>
-​
-        <div class="btn-group">
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Characters</button>
-            <div class="dropdown-menu">
-              <li><a class="dropdown-item" href="/character/sheets">Character Sheets</a></li>
-              <li class="active"><a class="dropdown-item" href="/character/creaion">Create Character</a></li>
-            </div>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Page 2</button>
-            <div class="dropdown-menu">
-              <li><a class="dropdown-item" href="/character/sheets">Character Sheets1</a></li>
-              <li><a class="dropdown-item" href="/character/creaion">Create Character1</a></li>
-            </div>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Page 3</button>
-            <div class="dropdown-menu">
-              <li><a class="dropdown-item" href="/character/sheets">Character Sheets2</a></li>
-              <li><a class="dropdown-item" href="/character/creaion">Create Character2</a></li>
-            </div>
-          </div>
-        </div>
+  ​
+        <ul class="nav navbar-nav">
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Characters<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/character/sheets">Character Sheets</a></li>
+            <li class="active"><a class="dropdown-item" href="/character/creation">Create Character</a></li>
+          </ul>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown 2<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Option 1</a></li>
+            <li><a class="dropdown-item" href="#">Option 2</a></li>
+          </ul>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown 3<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Option 1</a></li>
+            <li><a class="dropdown-item" href="#">Option 2</a></li>
+          </ul>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <form method="post" action="/login/logout" enctype="application/x-www-form-urlencoded">
+              <button type="submit" id="logout" class="btn btn-link"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+            </form>
+          </li>
+        </ul>
       </div>
     </nav>
-    <div class="container-fluid">
+    <div class="col-xs-2">
+    </div>
+    <div class="col-xs-6">
       <h1>Character Creation</h1>
       <form class="form-horizontal" method="post" action="/character/create" enctype="application/x-www-form-urlencoded">
         <div class="form-group">
@@ -50,10 +53,10 @@
             <div class="col-xs-4">
               <label class="control-label" for="CharacterName">Character Name:</label>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-4">
               <input type="text" id="CharacterName" name="CharacterName" />
             </div>
-          </div><br><br>
+          </div><br><br><br>
           <div>
             <div class="col-xs-2">
               <label class="control-label" for="Race">Race:</label>
@@ -96,10 +99,10 @@
         </div><br><br>
         <div>
           <div class="col-xs-2">
-            <label class="control-label col-xs-2" for="Class">Class:</label>
+            <label class="control-label" for="Class">Class:</label>
           </div>
           <div class="col-xs-4">
-            <select class="form-control col-xs-2" id="Class" name="Class">
+            <select class="form-control" id="Class" name="Class">
               <option value="Barbarian">Barbarian</option>
               <option value="Bard">Bard</option>
               <option value="Cleric">Cleric</option>
@@ -117,7 +120,7 @@
         </div><br><br>
         <div>
           <div class="col-xs-2">
-            <label class="control-label col-xs-2" for="Strength">Strength:</label>
+            <label class="control-label" for="Strength">Strength:</label>
           </div>
           <div class="col-xs-3">
             <select class="form-control" id="Strength" name="Strength">
@@ -142,7 +145,7 @@
         </div><br><br>
           <div>
             <div class="col-xs-2">
-              <label class="control-label col-xs-2" for="Dexterity">Dexterity:</label>
+              <label class="control-label" for="Dexterity">Dexterity:</label>
             </div>
             <div class="col-xs-3">
               <select class="form-control" type="number" id="Dexterity" name="Dexterity" min="3" max="18" step="1">
@@ -167,7 +170,7 @@
           </div><br><br>
           <div>
             <div class="col-xs-2">
-              <label class="control-label col-xs-2" for="Constitution">Constitution:</label>
+              <label class="control-label" for="Constitution">Constitution:</label>
             </div>
             <div class="col-xs-3">
               <select class="form-control" type="number" id="Constitution" name="Constitution" min="3" max="18">
@@ -192,7 +195,7 @@
           </div><br><br>
           <div>
             <div class="col-xs-2">
-              <label class="control-label col-xs-2" for="Intelligence">Intelligence:</label>
+              <label class="control-label" for="Intelligence">Intelligence:</label>
             </div>
             <div class="col-xs-3">
               <select class="form-control" type="number" id="Intelligence" name="Intelligence" min="3" max="18">
@@ -217,10 +220,10 @@
           </div><br><br>
           <div>
             <div class="col-xs-2">
-              <label class="control-label col-xs-2" for="Wisdom">Wisdom:</label>
+              <label class="control-label" for="Wisdom">Wisdom:</label>
             </div>
             <div class="col-xs-3">
-              <select class="form-control col-xs-2" type="number" id="Wisdom" name="Wisdom" min="3" max="18">
+              <select class="form-control" type="number" id="Wisdom" name="Wisdom" min="3" max="18">
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
@@ -242,10 +245,10 @@
           </div><br><br>
           <div>
             <div class="col-xs-2">
-              <label class="control-label col-xs-2" for="Charisma">Charisma:</label>
+              <label class="control-label" for="Charisma">Charisma:</label>
             </div>
             <div class="col-xs-3">
-              <select class="form-control col-xs-2" type="number" id="Charisma" name="Charisma" min="3" max="18">
+              <select class="form-control" type="number" id="Charisma" name="Charisma" min="3" max="18">
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
@@ -271,6 +274,8 @@
         </div>
       </form>
 ​
+    </div>
+    <div class="col-xs-4">
     </div>
   </body>
 ​

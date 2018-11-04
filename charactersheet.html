@@ -9,6 +9,38 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Ben's D&D App</a>
+      </div>
+​
+      <ul class="nav navbar-nav">
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Characters<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li class="active"><a class="dropdown-item" href="/character/sheets">Character Sheets</a></li>
+          <li><a class="dropdown-item" href="/character/creation">Create Character</a></li>
+        </ul>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown 2<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Option 1</a></li>
+          <li><a class="dropdown-item" href="#">Option 2</a></li>
+        </ul>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown 3<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Option 1</a></li>
+          <li><a class="dropdown-item" href="#">Option 2</a></li>
+        </ul>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <form method="post" action="/login/logout" enctype="application/x-www-form-urlencoded">
+            <button type="submit" id="logout" class="btn btn-link"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
   <div class="control-label col-sm-1"></div><h3>Characters</h3>
 <!--opening tag for rendering all characters in characters.json using ejs-->
   <% for(var id of Object.keys(characters)) { %>
@@ -179,11 +211,6 @@
   </div>
 
 <% } %>
-
-<a href="/character/creation">Create additional character</a>
-<form method="post" action="/login/logout" enctype="application/x-www-form-urlencoded">
-<button type="submit" id="logout" class="btn btn-link">Log out</button>
-</form>
 
 </body>
 

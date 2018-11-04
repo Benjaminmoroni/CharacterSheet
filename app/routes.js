@@ -35,6 +35,7 @@ router.get('/sheets', function(req, res) {
 })
 router.post('/update', function(req, res) {
   var formData = req.body
+  console.log(formData)
   var id = formData.characterId
   var sql = "UPDATE characters SET CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ? WHERE CharacterId = ?";
 
@@ -46,9 +47,9 @@ router.post('/update', function(req, res) {
   res.end();
 });
 router.post('/create', function(req, res) {
-  console.log('router.post(/create)')
   var newId = shortid.generate();
   var formData = req.body
+  console.log(formData)
   formData.id = newId
 
   var sql = "INSERT INTO characters SET CharacterId = ?, CharacterName = ?, Race = ?, Class = ?, Strength = ?, Dexterity = ?, Constitution = ?, Wisdom = ?, Intelligence = ?, Charisma = ?, user_id = ?";
